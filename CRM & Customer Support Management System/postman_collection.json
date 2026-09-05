@@ -1,0 +1,119 @@
+{
+  "info": {
+    "_postman_id": "5b2cdd88-1cfe-4c11-a16d-7f5ca5c5434d",
+    "name": "CRM & Customer Support Management API",
+    "description": "Complete collection for the CRM API. Set accessToken after login. Swagger is available at {{baseUrl}}/docs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:8000" },
+    { "key": "accessToken", "value": "" },
+    { "key": "ticketId", "value": "1" },
+    { "key": "customerId", "value": "1" },
+    { "key": "categoryId", "value": "1" },
+    { "key": "agentId", "value": "1" },
+    { "key": "commentId", "value": "1" },
+    { "key": "attachmentId", "value": "1" },
+    { "key": "notificationId", "value": "1" },
+    { "key": "logId", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        { "name": "Register customer", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/register", "body": {"mode":"raw","raw":"{\n  \"full_name\": \"Jane Customer\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"CustomerPass123\",\n  \"phone_number\": \"+15550100\",\n  \"company\": \"Acme\",\n  \"address\": \"New York\"\n}"} } },
+        { "name": "Login", "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/login", "body": {"mode":"raw","raw":"{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"ChangeMe123\"\n}"} } },
+        { "name": "Get profile", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/auth/profile" } },
+        { "name": "Update profile", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/profile", "body": {"mode":"raw","raw":"{\n  \"full_name\": \"Updated Name\",\n  \"phone_number\": \"+15550101\",\n  \"company\": \"Updated Company\",\n  \"address\": \"Updated Address\"\n}"} } },
+        { "name": "Change password", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/auth/change-password", "body": {"mode":"raw","raw":"{\n  \"current_password\": \"ChangeMe123\",\n  \"new_password\": \"NewPassword123\"\n}"} } }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        { "name": "Create customer", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/customers", "body": {"mode":"raw","raw":"{\n  \"full_name\": \"John Customer\",\n  \"email\": \"john@example.com\",\n  \"password\": \"CustomerPass123\",\n  \"phone_number\": \"1234567890\",\n  \"company\": \"ABC Company\",\n  \"address\": \"New York\",\n  \"status\": \"active\"\n}"} } },
+        { "name": "List customers", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/customers?page=1&limit=20" } },
+        { "name": "Get customer", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/customers/{{customerId}}" } },
+        { "name": "Update customer", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/customers/{{customerId}}", "body": {"mode":"raw","raw":"{\n  \"full_name\": \"Updated Customer\",\n  \"phone_number\": \"1234567890\",\n  \"company\": \"Updated Company\",\n  \"address\": \"Updated Address\",\n  \"status\": \"active\"\n}"} } },
+        { "name": "Deactivate customer", "request": { "method": "DELETE", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/customers/{{customerId}}" } },
+        { "name": "List customer tickets", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/customers/{{customerId}}/tickets?page=1&limit=20" } }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        { "name": "Create category", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/categories", "body": {"mode":"raw","raw":"{\n  \"name\": \"Billing\",\n  \"description\": \"Billing and payment issues\",\n  \"status\": \"active\"\n}"} } },
+        { "name": "List categories", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/categories?active_only=true" } },
+        { "name": "Get category", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/categories/{{categoryId}}" } },
+        { "name": "Update category", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/categories/{{categoryId}}", "body": {"mode":"raw","raw":"{\n  \"name\": \"Billing\",\n  \"description\": \"Updated description\",\n  \"status\": \"active\"\n}"} } },
+        { "name": "Delete category", "request": { "method": "DELETE", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/categories/{{categoryId}}" } }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        { "name": "Create ticket", "request": { "method": "POST", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/tickets", "body": {"mode":"raw","raw":"{\n  \"customer_id\": {{customerId}},\n  \"category_id\": {{categoryId}},\n  \"subject\": \"Payment issue\",\n  \"description\": \"Payment fails at checkout\",\n  \"priority\": \"high\"\n}"} } },
+        { "name": "List tickets", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/tickets?page=1&limit=20&sort_by=created_at&sort_order=desc" } },
+        { "name": "Get ticket", "request": { "method": "GET", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/tickets/{{ticketId}}" } },
+        { "name": "List ticket comments", "request": { "method":"GET", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/tickets/{{ticketId}}/comments", "description":"Shortcut to the same request in the Comments folder." } },
+        { "name": "Update ticket", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/tickets/{{ticketId}}", "body": {"mode":"raw","raw":"{\n  \"subject\": \"Updated subject\",\n  \"description\": \"Updated description\",\n  \"priority\": \"medium\"\n}"} } },
+        { "name": "Assign ticket", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/tickets/{{ticketId}}/assign", "body": {"mode":"raw","raw":"{\n  \"assigned_agent_id\": {{agentId}}\n}"} } },
+        { "name": "Reassign ticket", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url": "{{baseUrl}}/tickets/{{ticketId}}/reassign", "body": {"mode":"raw","raw":"{\n  \"assigned_agent_id\": {{agentId}}\n}"} } },
+        { "name": "Resolve ticket", "request": { "method": "PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/tickets/{{ticketId}}/resolve" } },
+        { "name": "Close ticket", "request": { "method":"PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/tickets/{{ticketId}}/close" } },
+        { "name": "Cancel ticket", "request": { "method":"PUT", "header": [{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url": "{{baseUrl}}/tickets/{{ticketId}}/cancel" } }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        { "name": "Add comment", "request": { "method":"POST", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url":"{{baseUrl}}/tickets/{{ticketId}}/comments", "body":{"mode":"raw","raw":"{\n  \"content\": \"Additional diagnostic details.\"\n}"} } },
+        { "name": "List ticket comments", "request": { "method":"GET", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/tickets/{{ticketId}}/comments" } },
+        { "name": "Update comment", "request": { "method":"PUT", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"},{"key":"Content-Type","value":"application/json"}], "url":"{{baseUrl}}/comments/{{commentId}}", "body":{"mode":"raw","raw":"{\n  \"content\": \"Updated comment\"\n}"} } },
+        { "name": "Delete comment", "request": { "method":"DELETE", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/comments/{{commentId}}" } }
+      ]
+    },
+    {
+      "name": "Attachments",
+      "item": [
+        { "name": "Upload attachment", "request": { "method":"POST", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/tickets/{{ticketId}}/attachments", "body":{"mode":"formdata","formdata":[{"key":"file","type":"file","src":""}]} } },
+        { "name": "List ticket attachments", "request": { "method":"GET", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/tickets/{{ticketId}}/attachments" } },
+        { "name": "Download attachment", "request": { "method":"GET", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/attachments/{{attachmentId}}" } },
+        { "name": "Delete attachment", "request": { "method":"DELETE", "header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}], "url":"{{baseUrl}}/attachments/{{attachmentId}}" } }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        { "name":"List all notifications", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/notifications?page=1&limit=20"} },
+        { "name":"List unread notifications", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/notifications?unread_only=true&page=1&limit=20"} },
+        { "name":"List read notifications", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/notifications?unread_only=false&page=1&limit=20"} },
+        { "name":"Mark notification read", "request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/notifications/{{notificationId}}/read"} },
+        { "name":"Mark all notifications read", "request":{"method":"PUT","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/notifications/read-all"} }
+      ]
+    },
+    {
+      "name": "SLA",
+      "item": [
+        { "name":"All SLA tickets", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/sla/tickets?page=1&limit=20"} },
+        { "name":"Breached SLA tickets", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/sla/breached?page=1&limit=20"} },
+        { "name":"At-risk SLA tickets", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/sla/at-risk?page=1&limit=20"} }
+      ]
+    },
+    {
+      "name": "Dashboards",
+      "item": [
+        { "name":"Admin dashboard", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/dashboard/admin"} },
+        { "name":"Agent dashboard", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/dashboard/agent"} },
+        { "name":"Customer dashboard", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/dashboard/customer"} }
+      ]
+    },
+    {
+      "name": "Audit Logs",
+      "item": [
+        { "name":"List audit logs", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/audit-logs?page=1&limit=20"} },
+        { "name":"Get audit log", "request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{accessToken}}"}],"url":"{{baseUrl}}/audit-logs/{{logId}}"} }
+      ]
+    }
+  ]
+}
